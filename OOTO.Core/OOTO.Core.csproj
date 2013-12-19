@@ -41,6 +41,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Interface\IAggregateRoot.cs" />
+    <Compile Include="Domain\Interface\IAppendFacts.cs" />
+    <Compile Include="Domain\Interface\IFact.cs" />
+    <Compile Include="Domain\Interface\IHaveFacts.cs" />
+    <Compile Include="Domain\Interface\IIdentifiable.cs" />
+    <Compile Include="Interface\IAggregateBuilder.cs" />
+    <Compile Include="Interface\IClock.cs" />
+    <Compile Include="Interface\IDomainEventBroker.cs" />
+    <Compile Include="Interface\IHandle%27.cs" />
+    <Compile Include="Interface\IHandle.cs" />
+    <Compile Include="Interface\IHandleDuringUnitOfWork%27.cs" />
+    <Compile Include="Interface\IQuery%27.cs" />
+    <Compile Include="Interface\IQuery%27%27.cs" />
+    <Compile Include="Interface\IQueryableSnapshot.cs" />
+    <Compile Include="Interface\IRepository%27.cs" />
+    <Compile Include="Interface\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
