@@ -32,7 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.2.0\lib\net40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,23 +45,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\AggregateRoot.cs" />
+    <Compile Include="Domain\AggregateRootExtensions.cs" />
+    <Compile Include="Domain\AggregateRootIdEqualityComparer%27.cs" />
+    <Compile Include="Domain\Entity.cs" />
+    <Compile Include="Domain\Fact%27.cs" />
     <Compile Include="Domain\Interface\IAggregateRoot.cs" />
     <Compile Include="Domain\Interface\IAppendFacts.cs" />
     <Compile Include="Domain\Interface\IFact.cs" />
     <Compile Include="Domain\Interface\IHaveFacts.cs" />
     <Compile Include="Domain\Interface\IIdentifiable.cs" />
-    <Compile Include="Interface\IAggregateBuilder.cs" />
-    <Compile Include="Interface\IClock.cs" />
-    <Compile Include="Interface\IDomainEventBroker.cs" />
-    <Compile Include="Interface\IHandle%27.cs" />
-    <Compile Include="Interface\IHandle.cs" />
-    <Compile Include="Interface\IHandleDuringUnitOfWork%27.cs" />
-    <Compile Include="Interface\IQuery%27.cs" />
-    <Compile Include="Interface\IQuery%27%27.cs" />
-    <Compile Include="Interface\IQueryableSnapshot.cs" />
-    <Compile Include="Interface\IRepository%27.cs" />
-    <Compile Include="Interface\IUnitOfWork.cs" />
+    <Compile Include="EventSourcing\AggregateBuilder.cs" />
+    <Compile Include="EventSourcing\DomainEventBroker.cs" />
+    <Compile Include="EventSourcing\Interface\IAggregateBuilder.cs" />
+    <Compile Include="EventSourcing\Interface\IClock.cs" />
+    <Compile Include="EventSourcing\Interface\IDomainEventBroker.cs" />
+    <Compile Include="EventSourcing\Interface\IHandle%27.cs" />
+    <Compile Include="EventSourcing\Interface\IHandle.cs" />
+    <Compile Include="EventSourcing\Interface\IHandleDuringUnitOfWork%27.cs" />
+    <Compile Include="EventSourcing\Interface\IQuery%27.cs" />
+    <Compile Include="EventSourcing\Interface\IQuery%27%27.cs" />
+    <Compile Include="EventSourcing\Interface\IQueryableSnapshot.cs" />
+    <Compile Include="EventSourcing\Interface\IRepository%27.cs" />
+    <Compile Include="EventSourcing\Interface\IUnitOfWork.cs" />
+    <Compile Include="EventSourcing\QueryableSnapshot.cs" />
+    <Compile Include="EventSourcing\Repository%27.cs" />
+    <Compile Include="EventSourcing\SystemClock.cs" />
+    <Compile Include="EventSourcing\UnitOfWork.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,13 +8,23 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // */
 
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace OOTO.Core.Interface
+namespace OOTO.Core.Extensions
 {
     //Originally from https://github.com/andrewabest/EventSourcing101
-    public interface IQuery<TIn, TOut>
+    public static class EnumerableExtensions
     {
-        TOut Execute(IQueryable<TIn> source);
+        public static bool None<T>(this IEnumerable<T> collection)
+        {
+            return !collection.Any();
+        }
+
+        public static bool None<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
+        {
+            return !collection.Any(predicate);
+        }
     }
 }

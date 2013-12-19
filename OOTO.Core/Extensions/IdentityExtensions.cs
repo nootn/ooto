@@ -9,17 +9,16 @@
 // */
 
 using System;
-using OOTO.Core.Domain.Interface;
+using System.Security.Principal;
 
-namespace OOTO.Core.Interface
+namespace OOTO.Core.Extensions
 {
     //Originally from https://github.com/andrewabest/EventSourcing101
-    public interface IRepository<T> where T : class, IAggregateRoot
+    public static class IdentityExtensions
     {
-        T GetById(Guid id);
-        void Add(T item);
-        T[] Query(IQuery<T> query);
-        TOut Query<TOut>(IQuery<T, TOut> query);
-        int Count(IQuery<T> query);
+        public static Guid? Id(this IIdentity identity)
+        {
+            return !string.IsNullOrEmpty(identity.Name) ? new Guid(identity.Name) : (Guid?) null;
+        }
     }
 }

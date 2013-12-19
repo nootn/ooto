@@ -8,13 +8,25 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // */
 
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using OOTO.Core.Domain.Interface;
 
-namespace OOTO.Core.Interface
+namespace OOTO.Core.Domain
 {
     //Originally from https://github.com/andrewabest/EventSourcing101
-    public interface IHandleDuringUnitOfWork<TFact> where TFact : IFact
+    public static class AggregateRootExtensions
     {
-        void Handle(TFact fact);
+        public static T BinaryClone<T>(this T entity) where T : IAggregateRoot
+        {
+            var serializer = new BinaryFormatter();
+            using (var ms = new MemoryStream())
+            {
+                serializer.Serialize(ms, entity);
+                ms.Position = 0;
+                var clone = (T) serializer.Deserialize(ms);
+                return clone;
+            }
+        }
     }
 }
