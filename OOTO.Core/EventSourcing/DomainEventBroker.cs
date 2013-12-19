@@ -12,7 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Autofac;
 using Autofac.Core;
-using OOTO.Core.Domain.Interface;
+using OOTO.Core.EventSourcing.Domain.Interface;
 using OOTO.Core.EventSourcing.Interface;
 
 namespace OOTO.Core.EventSourcing

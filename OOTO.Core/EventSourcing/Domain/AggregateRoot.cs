@@ -9,12 +9,32 @@
 // */
 
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using OOTO.Core.EventSourcing.Domain.Interface;
 
-namespace OOTO.Core.Domain.Interface
+namespace OOTO.Core.EventSourcing.Domain
 {
     //Originally from https://github.com/andrewabest/EventSourcing101
-    public interface IIdentifiable
+    [Serializable]
+    public abstract class AggregateRoot : IAggregateRoot, IAppendFacts
     {
-        Guid Id { get; }
+        private readonly ConcurrentQueue<IFact> _pendingFacts = new ConcurrentQueue<IFact>();
+
+        public Guid Id { get; protected set; }
+
+        public IEnumerable<IFact> GetPendingFacts()
+        {
+            IFact fact;
+
+            while (_pendingFacts.TryDequeue(out fact)) yield return fact;
+        }
+
+        public void Append(IFact fact)
+        {
+            if (fact.AggregateRootId == Guid.Empty) fact.AggregateRootId = Id;
+
+            _pendingFacts.Enqueue(fact);
+        }
     }
 }

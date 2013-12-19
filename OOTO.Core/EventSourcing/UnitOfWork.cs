@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Threading;
-using OOTO.Core.Domain.Interface;
+using OOTO.Core.EventSourcing.Domain.Interface;
 using OOTO.Core.EventSourcing.Interface;
 using OOTO.Core.Extensions;
 

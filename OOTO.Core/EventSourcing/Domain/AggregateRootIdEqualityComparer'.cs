@@ -8,33 +8,22 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // */
 
-using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using OOTO.Core.Domain.Interface;
+using OOTO.Core.EventSourcing.Domain.Interface;
 
-namespace OOTO.Core.Domain
+namespace OOTO.Core.EventSourcing.Domain
 {
     //Originally from https://github.com/andrewabest/EventSourcing101
-    [Serializable]
-    public abstract class AggregateRoot : IAggregateRoot, IAppendFacts
+    public class AggregateRootIdEqualityComparer<T> : IEqualityComparer<T> where T : IAggregateRoot
     {
-        private readonly ConcurrentQueue<IFact> _pendingFacts = new ConcurrentQueue<IFact>();
-
-        public Guid Id { get; protected set; }
-
-        public IEnumerable<IFact> GetPendingFacts()
+        public bool Equals(T x, T y)
         {
-            IFact fact;
-
-            while (_pendingFacts.TryDequeue(out fact)) yield return fact;
+            return x.Id == y.Id;
         }
 
-        public void Append(IFact fact)
+        public int GetHashCode(T obj)
         {
-            if (fact.AggregateRootId == Guid.Empty) fact.AggregateRootId = Id;
-
-            _pendingFacts.Enqueue(fact);
+            return obj.Id.GetHashCode();
         }
     }
 }

@@ -45,16 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\AggregateRoot.cs" />
-    <Compile Include="Domain\AggregateRootExtensions.cs" />
-    <Compile Include="Domain\AggregateRootIdEqualityComparer%27.cs" />
-    <Compile Include="Domain\Entity.cs" />
-    <Compile Include="Domain\Fact%27.cs" />
-    <Compile Include="Domain\Interface\IAggregateRoot.cs" />
-    <Compile Include="Domain\Interface\IAppendFacts.cs" />
-    <Compile Include="Domain\Interface\IFact.cs" />
-    <Compile Include="Domain\Interface\IHaveFacts.cs" />
-    <Compile Include="Domain\Interface\IIdentifiable.cs" />
+    <Compile Include="EventSourcing\Domain\AggregateRoot.cs" />
+    <Compile Include="EventSourcing\Domain\AggregateRootExtensions.cs" />
+    <Compile Include="EventSourcing\Domain\AggregateRootIdEqualityComparer%27.cs" />
+    <Compile Include="EventSourcing\Domain\Entity.cs" />
+    <Compile Include="EventSourcing\Domain\Fact%27.cs" />
+    <Compile Include="EventSourcing\Domain\Interface\IAggregateRoot.cs" />
+    <Compile Include="EventSourcing\Domain\Interface\IAppendFacts.cs" />
+    <Compile Include="EventSourcing\Domain\Interface\IFact.cs" />
+    <Compile Include="EventSourcing\Domain\Interface\IHaveFacts.cs" />
+    <Compile Include="EventSourcing\Domain\Interface\IIdentifiable.cs" />
     <Compile Include="EventSourcing\AggregateBuilder.cs" />
     <Compile Include="EventSourcing\DomainEventBroker.cs" />
     <Compile Include="EventSourcing\Interface\IAggregateBuilder.cs" />

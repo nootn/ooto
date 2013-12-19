@@ -8,14 +8,32 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // */
 
-using System.Collections.Generic;
+using System;
+using OOTO.Core.EventSourcing.Domain.Interface;
 
-namespace OOTO.Core.Domain.Interface
-
+namespace OOTO.Core.EventSourcing.Domain
 {
     //Originally from https://github.com/andrewabest/EventSourcing101
-    public interface IHaveFacts
+    [Serializable]
+    public abstract class Entity : IIdentifiable, IAppendFacts
     {
-        IEnumerable<IFact> GetPendingFacts();
+        private readonly IAppendFacts _parent;
+
+        protected Entity(IAppendFacts parent)
+        {
+            _parent = parent;
+        }
+
+        public IAppendFacts Parent
+        {
+            get { return _parent; }
+        }
+
+        public void Append(IFact fact)
+        {
+            _parent.Append(fact);
+        }
+
+        public Guid Id { get; protected set; }
     }
 }

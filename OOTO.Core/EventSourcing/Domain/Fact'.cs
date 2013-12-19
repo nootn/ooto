@@ -8,25 +8,49 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // */
 
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using OOTO.Core.Domain.Interface;
+using System;
+using OOTO.Core.EventSourcing.Domain.Interface;
 
-namespace OOTO.Core.Domain
+namespace OOTO.Core.EventSourcing.Domain
 {
     //Originally from https://github.com/andrewabest/EventSourcing101
-    public static class AggregateRootExtensions
+    [Serializable]
+    public abstract class Fact<T> : IFact
+        where T : IAggregateRoot
     {
-        public static T BinaryClone<T>(this T entity) where T : IAggregateRoot
+        protected Fact()
         {
-            var serializer = new BinaryFormatter();
-            using (var ms = new MemoryStream())
-            {
-                serializer.Serialize(ms, entity);
-                ms.Position = 0;
-                var clone = (T) serializer.Deserialize(ms);
-                return clone;
-            }
+            FactId = Guid.NewGuid();
+        }
+
+        public Guid AggregateRootId { get; set; }
+        public Guid UnitOfWorkId { get; set; }
+        public int UnitOfWorkSequenceNumber { get; set; }
+
+        public Guid Id { get; set; }
+
+        public DateTimeOffset Timestamp { get; set; }
+
+        public Guid? CreatedBy { get; set; }
+
+        public Guid FactId { get; set; }
+
+
+        public void SetUnitOfWorkDetails(Guid unitOfWorkId, int unitOfWorkSequenceNumber, DateTimeOffset timestamp,
+            Guid? userId)
+        {
+            if (unitOfWorkId == Guid.Empty)
+                throw new ArgumentException("unitOfWorkId", "An ID for the current unit of work must be provided!");
+
+            UnitOfWorkId = unitOfWorkId;
+            UnitOfWorkSequenceNumber = unitOfWorkSequenceNumber;
+            Timestamp = timestamp;
+            CreatedBy = userId;
+        }
+
+        public string AggregateRootTypeName
+        {
+            get { return typeof (T).FullName; }
         }
     }
 }

@@ -11,7 +11,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
-using OOTO.Core.Domain.Interface;
+using OOTO.Core.EventSourcing.Domain.Interface;
 using OOTO.Core.EventSourcing.Interface;
 
 namespace OOTO.Core.EventSourcing
