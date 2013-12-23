@@ -13,7 +13,7 @@ using OOTO.Core.EventSourcing.Interface;
 
 namespace OOTO.Core.EventSourcing
 {
-    internal class SystemClock : IClock
+    public class SystemClock : IClock
     {
         //Originally from https://github.com/andrewabest/EventSourcing101
         public DateTimeOffset UtcNow

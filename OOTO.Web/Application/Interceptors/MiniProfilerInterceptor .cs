@@ -8,21 +8,25 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // */
 
-using Autofac;
-using OOTO.Core.EventSourcing;
-using OOTO.Core.EventSourcing.Interface;
+using Castle.DynamicProxy;
+using StackExchange.Profiling;
 
-namespace OOTO.Core.AutoFac.Modules
+namespace OOTO.Web.Application.Interceptors
 {
-    //Originally from https://github.com/andrewabest/EventSourcing101
-    public class HandlerModule : Module
+    public class MiniProfilerInterceptor : IInterceptor
     {
-        protected override void Load(ContainerBuilder builder)
+        public void Intercept(IInvocation invocation)
         {
-            builder.RegisterAssemblyTypes(typeof (Repository<>).Assembly)
-                .Where(t => t.IsClosedTypeOf(typeof (IHandleDuringUnitOfWork<>)))
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
+            var typeName = invocation.TargetType.Name;
+            var methodName = invocation.Method.Name;
+            var args = string.Join(", ", invocation.Arguments);
+
+            var callInfo = string.Format("{0}.{1}({2})", typeName, methodName, args);
+
+            using (MiniProfiler.Current.Step(callInfo))
+            {
+                invocation.Proceed();
+            }
         }
     }
 }

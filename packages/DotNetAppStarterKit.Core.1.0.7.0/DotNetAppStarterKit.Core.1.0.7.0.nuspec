@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>DotNetAppStarterKit.Core</id>
+    <version>1.0.7.0</version>
+    <authors>http://www.nootn.com.au</authors>
+    <owners>http://www.nootn.com.au</owners>
+    <projectUrl>http://nootn.github.com/DotNetAppStarterKit</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/3172408/16287e323f3bf3578271be411aadde84.jpg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Gets you up and going with a DotNet app quicker by providing interfaces for commonly used components such as logging, caching and security.</description>
+    <releaseNotes>* Adds Mapping interfaces IMapper and IInstanceCreator</releaseNotes>
+    <copyright>Copyright http://www.nootn.com.au 2013</copyright>
+    <tags>DotNetAppStarterKit.Core DotNetAppStarterKit .net dotnet infrastructure base caching cache logging log security event events publish subscribe nootn</tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Microsoft.CSharp" targetFramework=".NETFramework4.0" />
+      <frameworkAssembly assemblyName="System" targetFramework=".NETFramework4.0" />
+      <frameworkAssembly assemblyName="System.ComponentModel.DataAnnotations" targetFramework=".NETFramework4.0" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework=".NETFramework4.0" />
+      <frameworkAssembly assemblyName="System.Data" targetFramework=".NETFramework4.0" />
+    </frameworkAssemblies>
+  </metadata>
+</package>

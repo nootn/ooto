@@ -18,7 +18,7 @@ using OOTO.Core.EventSourcing.Interface;
 namespace OOTO.Core.EventSourcing
 {
     //Originally from https://github.com/andrewabest/EventSourcing101
-    internal class DomainEventBroker : IDomainEventBroker
+    public class DomainEventBroker : IDomainEventBroker
     {
         private readonly ILifetimeScope _lifetimeScope;
 

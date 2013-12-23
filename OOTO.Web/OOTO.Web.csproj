@@ -44,7 +44,34 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.2.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac.Integration.Mvc">
+      <HintPath>..\packages\Autofac.Mvc5.3.0.0\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="AutofacContrib.DynamicProxy">
+      <HintPath>..\packages\AutofacContrib.DynamicProxy.2.3.2.632\lib\net40\AutofacContrib.DynamicProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.1.0\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetAppStarterKit.Core">
+      <HintPath>..\packages\DotNetAppStarterKit.Core.1.0.7.0\lib\net45\DotNetAppStarterKit.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetAppStarterKit.Web">
+      <HintPath>..\packages\DotNetAppStarterKit.Web.1.0.4.0\lib\net45\DotNetAppStarterKit.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetAppStarterKit.Web.Mvc">
+      <HintPath>..\packages\DotNetAppStarterKit.Web.Mvc.1.0.4.0\lib\net45\DotNetAppStarterKit.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MiniProfiler">
+      <HintPath>..\packages\MiniProfiler.2.1.0\lib\net40\MiniProfiler.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -103,6 +130,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.4.4\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -127,8 +157,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\Interceptors\MiniProfilerInterceptor .cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\MiniProfiler.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -138,6 +170,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />

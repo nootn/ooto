@@ -35,6 +35,9 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.2.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="DotNetAppStarterKit.Core">
+      <HintPath>..\packages\DotNetAppStarterKit.Core.1.0.7.0\lib\net45\DotNetAppStarterKit.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -45,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoFac\Modules\PersistenceModule.cs" />
+    <Compile Include="AutoFac\Modules\ReadModelModule.cs" />
     <Compile Include="EventSourcing\Domain\AggregateRoot.cs" />
     <Compile Include="EventSourcing\Domain\AggregateRootExtensions.cs" />
     <Compile Include="EventSourcing\Domain\AggregateRootIdEqualityComparer%27.cs" />
