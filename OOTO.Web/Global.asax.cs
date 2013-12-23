@@ -113,6 +113,32 @@ namespace OOTO.Web
                 .AsImplementedInterfaces()
                 .SingleInstance();
 
+            //    Sample wireup of NEventStore using RavenDb.
+            //    builder.Register(c =>
+            //    {
+            //        var bus = c.Resolve<IDomainEventBroker>();
+            //        var factStore =
+            //               Wireup.Init()
+            //                     .LogToOutputWindow()
+            //                     .UsingRavenPersistence(c.Resolve<IDocumentStore>)
+            //                     .InitializeStorageEngine()
+            //                     .UsingJsonSerialization()
+            //                     .UsingSynchronousDispatchScheduler()
+            //                     .DispatchTo(bus)
+            //                     .Build();
+            //        bus.StartDispatching();
+            //        return factStore;
+            //    })
+            //    .As<IStoreEvents>()
+            //    .SingleInstance();
+
+            //Example read model..
+            //builder.RegisterType<ToDoReadModelReadModel>()
+            //    .AsImplementedInterfaces()
+            //    .AsSelf()
+            //    .SingleInstance()
+            //    .AutoActivate();
+
 
             //Build and set resolver
             try
