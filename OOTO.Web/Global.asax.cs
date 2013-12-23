@@ -10,6 +10,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
@@ -23,6 +26,9 @@ using Autofac;
 using Autofac.Builder;
 using Autofac.Integration.Mvc;
 using AutofacContrib.DynamicProxy;
+using NEventStore;
+using NEventStore.Dispatcher;
+using NEventStore.Persistence.SqlPersistence.SqlDialects;
 using OOTO.Core.EventSourcing;
 using OOTO.Core.EventSourcing.Domain.Interface;
 using OOTO.Core.EventSourcing.Interface;
@@ -132,6 +138,44 @@ namespace OOTO.Web
             //    .As<IStoreEvents>()
             //    .SingleInstance();
 
+            //TODO: delete this!  Just testing
+            const string connectionString =
+                        @"Data Source=(LocalDb)\Projects;Initial Catalog=master;Integrated Security=True;";
+            const string databaseName = "TestSqlPersistence";
+            using (var conn = new SqlConnection(connectionString))
+            {
+                using (
+                    var cmd =
+                        new SqlCommand(
+                            string.Format(
+                                "IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = '{0}') CREATE DATABASE {0}",
+                                databaseName), conn))
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            builder.Register(c =>
+            {
+                //var bus = c.Resolve<IDomainEventBroker>();
+                var factStore =
+                       Wireup.Init()
+                             .UsingSqlPersistence("TestSqlPersistence")
+                             .WithDialect(new MsSqlDialect())
+                             .EnlistInAmbientTransaction() // two-phase commit
+                             //.UsingInMemoryPersistence()
+                             .InitializeStorageEngine()
+                             .UsingBinarySerialization()
+                             .UsingSynchronousDispatchScheduler()
+                             .DispatchTo(new DelegateMessageDispatcher(DispatchCommit))
+                             .Build();
+                //bus.StartDispatching();
+                return factStore;
+            })
+            .As<IStoreEvents>()
+            .SingleInstance();
+
             //Example read model..
             //builder.RegisterType<ToDoReadModelReadModel>()
             //    .AsImplementedInterfaces()
@@ -159,6 +203,23 @@ namespace OOTO.Web
                 }
                 throw;
             }
+        }
+
+        private static void DispatchCommit(Commit commit)
+        {
+            Debug.WriteLine("Dispatch Commit: {0}", commit.CommitId);
+            // This is where we'd hook into our messaging infrastructure, such as NServiceBus,
+            // MassTransit, WCF, or some other communications infrastructure.
+            // This can be a class as well--just implement IDispatchCommits.
+            //try
+            //{
+            //    foreach (var @event in commit.Events)
+            //        Console.WriteLine(Resources.MessagesDispatched + ((SomeDomainEvent)@event.Body).Value);
+            //}
+            //catch (Exception)
+            //{
+            //    Console.WriteLine(Resources.UnableToDispatch);
+            //}
         }
 
         private static bool IsAssignableToGenericType(Type givenType, Type genericType)

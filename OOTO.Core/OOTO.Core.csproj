@@ -39,6 +39,9 @@
     <Reference Include="DotNetAppStarterKit.Core">
       <HintPath>..\packages\DotNetAppStarterKit.Core.1.0.7.0\lib\net45\DotNetAppStarterKit.Core.dll</HintPath>
     </Reference>
+    <Reference Include="NEventStore">
+      <HintPath>..\packages\NEventStore.4.1.0.10\lib\net40\NEventStore.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />

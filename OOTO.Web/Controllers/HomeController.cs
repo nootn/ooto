@@ -10,6 +10,7 @@
 
 using System;
 using System.Web.Mvc;
+using DotNetAppStarterKit.Web.Security;
 using OOTO.Core.DomainModel.Aggregate.UserAccountAggregate;
 using OOTO.Core.DomainModel.Aggregate.UserAccountAggregate.Query;
 using OOTO.Core.EventSourcing.Interface;
@@ -18,9 +19,9 @@ namespace OOTO.Web.Controllers
 {
     public partial class HomeController : Controller
     {
+        public const string ScenarioMachine1User1 = "Machine1User1";
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<UserAccount> _userRepository;
-        public const string ScenarioMachine1User1 = "Machine1User1";
 
         public HomeController(IUnitOfWork unitOfWork, IRepository<UserAccount> userRepository)
         {

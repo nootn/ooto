@@ -13,6 +13,7 @@ using OOTO.Core.EventSourcing.Domain;
 
 namespace OOTO.Core.DomainModel.Aggregate.UserAccountAggregate.Fact
 {
+    [Serializable]
     public class MachineLoginOccurredFact : Fact<UserAccount>
     {
         public DateTimeOffset LoggedInAt { get; set; }

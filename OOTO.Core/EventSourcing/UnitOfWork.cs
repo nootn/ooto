@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Threading;
+using NEventStore;
 using OOTO.Core.EventSourcing.Domain.Interface;
 using OOTO.Core.EventSourcing.Interface;
 using OOTO.Core.Extensions;
@@ -22,7 +23,7 @@ namespace OOTO.Core.EventSourcing
     //Originally from https://github.com/andrewabest/EventSourcing101
     public class UnitOfWork : IUnitOfWork
     {
-        //private readonly IStoreEvents _factStore;
+        private readonly IStoreEvents _factStore;
         private readonly IClock _clock;
         private readonly IDomainEventBroker _domainEventBroker;
         private readonly List<IAggregateRoot> _enlistedAggregateRoots = new List<IAggregateRoot>();
@@ -31,12 +32,12 @@ namespace OOTO.Core.EventSourcing
         private int _committed;
 
         public UnitOfWork(
-            //IStoreEvents factStore, 
+            IStoreEvents factStore, 
             IClock clock,
             IIdentity identity,
             IDomainEventBroker domainEventBroker)
         {
-            //_factStore = factStore;
+            _factStore = factStore;
 
             _clock = clock;
             _identity = identity;
@@ -72,7 +73,7 @@ namespace OOTO.Core.EventSourcing
             SetAllFactDetails(allFactsForThisUnitOfWork);
             DispatchAllFacts(allFactsForThisUnitOfWork);
 
-            //CommitAllFacts(allFactsForThisUnitOfWork);
+            CommitAllFacts(allFactsForThisUnitOfWork);
         }
 
         private List<IFact> GetAllFactsForThisUnitOfWork()
@@ -117,26 +118,23 @@ namespace OOTO.Core.EventSourcing
 
         private void CommitAllFacts(IEnumerable<IFact> allFactsForThisUnitOfWork)
         {
-            throw new NotImplementedException(
-                "Add NEventStore and uncomment this, and remove DispatchAllFacts as NEventStore handles dispatch after it commits.");
+            var groupedFacts = allFactsForThisUnitOfWork.GroupBy(f => f.AggregateRootId);
 
-            //var groupedFacts = allFactsForThisUnitOfWork.GroupBy(f => f.AggregateRootId);
+            foreach (var factGroup in groupedFacts)
+            {
 
-            //foreach (var factGroup in groupedFacts)
-            //{
+                var aggregateRootId = factGroup.First().AggregateRootId;
 
-            //    var aggregateRootId = factGroup.First().AggregateRootId;
+                using (var factStream = _factStore.OpenStream(aggregateRootId, 0, int.MaxValue))
+                {
+                    foreach (var fact in factGroup)
+                    {
+                        factStream.Add(new EventMessage { Body = fact });
+                    }
 
-            //    using (var factStream = _factStore.OpenStream(aggregateRootId, 0, int.MaxValue))
-            //    {
-            //        foreach (var fact in factGroup)
-            //        {
-            //            factStream.Add(new EventMessage { Body = fact });
-            //        }
-
-            //        factStream.CommitChanges(Guid.NewGuid());
-            //    }
-            //}
+                    factStream.CommitChanges(Guid.NewGuid());
+                }
+            }
         }
 
         protected virtual void Dispose(bool disposing)
