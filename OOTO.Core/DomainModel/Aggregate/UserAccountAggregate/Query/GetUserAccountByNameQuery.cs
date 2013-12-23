@@ -8,18 +8,24 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // */
 
-using System;
 using System.Linq;
-using OOTO.Core.EventSourcing.Domain.Interface;
+using OOTO.Core.EventSourcing.Interface;
 
-namespace OOTO.Core.EventSourcing.Interface
+namespace OOTO.Core.DomainModel.Aggregate.UserAccountAggregate.Query
 {
-    //Originally from https://github.com/andrewabest/EventSourcing101
-    public interface IUnitOfWork : IDisposable
+    public class GetUserAccountByNameQuery : IQuery<UserAccount, UserAccount>
     {
-        void EnlistAggregate(IAggregateRoot aggregateRoot);
-        void Commit();
-        T TryGetEnlistedAggregateRoot<T>(Guid id) where T : IAggregateRoot;
-        IQueryable<T> EnlistedAggregateRoots<T>() where T : IAggregateRoot;
+        private readonly string _name;
+
+        public GetUserAccountByNameQuery(string name)
+        {
+            _name = name;
+        }
+
+        public UserAccount Execute(IQueryable<UserAccount> source)
+        {
+            //TODO: deal with case sensitivity - will depend on persistence?
+            return source.SingleOrDefault(_ => _.Name == _name);
+        }
     }
 }

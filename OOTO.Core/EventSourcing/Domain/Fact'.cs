@@ -31,13 +31,13 @@ namespace OOTO.Core.EventSourcing.Domain
 
         public DateTimeOffset Timestamp { get; set; }
 
-        public Guid? CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
 
         public Guid FactId { get; set; }
 
 
         public void SetUnitOfWorkDetails(Guid unitOfWorkId, int unitOfWorkSequenceNumber, DateTimeOffset timestamp,
-            Guid? userId)
+            string userId)
         {
             if (unitOfWorkId == Guid.Empty)
                 throw new ArgumentException("unitOfWorkId", "An ID for the current unit of work must be provided!");

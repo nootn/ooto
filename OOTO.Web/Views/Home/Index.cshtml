@@ -1,8 +1,15 @@
-﻿@{
+﻿@using OOTO.Web.Controllers
+@{
     ViewBag.Title = "Home";
 }
 
 <div class="jumbotron">
     <h1>OOTO</h1>
     <p class="lead">Out Of The Ordinary - Security Monitoring</p>
+</div>
+<div>
+    <h2>Test data</h2>
+    <p>
+        @Html.ActionLink("Login to 'Machine1' as 'User1'", @Mvc.Home.Index(HomeController.ScenarioMachine1User1))
+    </p>
 </div>

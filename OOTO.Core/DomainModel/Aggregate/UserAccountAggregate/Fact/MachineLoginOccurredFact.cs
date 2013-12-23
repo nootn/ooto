@@ -9,17 +9,16 @@
 // */
 
 using System;
-using System.Linq;
-using OOTO.Core.EventSourcing.Domain.Interface;
+using OOTO.Core.EventSourcing.Domain;
 
-namespace OOTO.Core.EventSourcing.Interface
+namespace OOTO.Core.DomainModel.Aggregate.UserAccountAggregate.Fact
 {
-    //Originally from https://github.com/andrewabest/EventSourcing101
-    public interface IUnitOfWork : IDisposable
+    public class MachineLoginOccurredFact : Fact<UserAccount>
     {
-        void EnlistAggregate(IAggregateRoot aggregateRoot);
-        void Commit();
-        T TryGetEnlistedAggregateRoot<T>(Guid id) where T : IAggregateRoot;
-        IQueryable<T> EnlistedAggregateRoots<T>() where T : IAggregateRoot;
+        public DateTimeOffset LoggedInAt { get; set; }
+
+        public string MachineName { get; set; }
+
+        public string ClientMachineName { get; set; }
     }
 }

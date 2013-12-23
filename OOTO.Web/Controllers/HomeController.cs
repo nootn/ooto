@@ -8,14 +8,45 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // */
 
+using System;
 using System.Web.Mvc;
+using OOTO.Core.DomainModel.Aggregate.UserAccountAggregate;
+using OOTO.Core.DomainModel.Aggregate.UserAccountAggregate.Query;
+using OOTO.Core.EventSourcing.Interface;
 
 namespace OOTO.Web.Controllers
 {
-    public class HomeController : Controller
+    public partial class HomeController : Controller
     {
-        public ActionResult Index()
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IRepository<UserAccount> _userRepository;
+        public const string ScenarioMachine1User1 = "Machine1User1";
+
+        public HomeController(IUnitOfWork unitOfWork, IRepository<UserAccount> userRepository)
         {
+            _unitOfWork = unitOfWork;
+            _userRepository = userRepository;
+        }
+
+        public virtual ActionResult Index(string scenario = "")
+        {
+            switch (scenario)
+            {
+                case ScenarioMachine1User1:
+                    using (_unitOfWork)
+                    {
+                        var existingUser = _userRepository.Query(new GetUserAccountByNameQuery("User1"));
+                        if (existingUser == null)
+                        {
+                            existingUser = UserAccount.Create("User1");
+                            _userRepository.Add(existingUser);
+                        }
+                        existingUser.LoginToMachine(DateTimeOffset.Now, "Machine1", "User1PC");
+
+                        _unitOfWork.Commit();
+                    }
+                    break;
+            }
             return View();
         }
     }

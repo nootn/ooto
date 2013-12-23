@@ -49,6 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomainModel\Aggregate\UserAccountAggregate\Fact\MachineLoginOccurredFact.cs" />
+    <Compile Include="DomainModel\Aggregate\UserAccountAggregate\Fact\UserCreatedFact.cs" />
+    <Compile Include="DomainModel\Aggregate\UserAccountAggregate\MachineLogin.cs" />
+    <Compile Include="DomainModel\Aggregate\UserAccountAggregate\Query\GetUserAccountByNameQuery.cs" />
+    <Compile Include="DomainModel\Aggregate\UserAccountAggregate\UserAccount.cs" />
     <Compile Include="EventSourcing\Domain\AggregateRoot.cs" />
     <Compile Include="EventSourcing\Domain\AggregateRootExtensions.cs" />
     <Compile Include="EventSourcing\Domain\AggregateRootIdEqualityComparer%27.cs" />
@@ -77,7 +82,6 @@
     <Compile Include="EventSourcing\SystemClock.cs" />
     <Compile Include="EventSourcing\UnitOfWork.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

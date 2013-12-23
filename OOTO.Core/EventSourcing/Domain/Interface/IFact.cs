@@ -19,13 +19,13 @@ namespace OOTO.Core.EventSourcing.Domain.Interface
         Guid UnitOfWorkId { get; }
         int UnitOfWorkSequenceNumber { get; }
         DateTimeOffset Timestamp { get; }
-        Guid? CreatedBy { get; }
+        string CreatedBy { get; }
 
         string AggregateRootTypeName { get; }
         Guid Id { get; set; }
         Guid FactId { get; }
 
         void SetUnitOfWorkDetails(Guid unitOfWorkId, int unitOfWorkSequenceNumber, DateTimeOffset timestamp,
-            Guid? userId);
+            string userId);
     }
 }

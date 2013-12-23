@@ -20,7 +20,7 @@ using OOTO.Core.Extensions;
 namespace OOTO.Core.EventSourcing
 {
     //Originally from https://github.com/andrewabest/EventSourcing101
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
         //private readonly IStoreEvents _factStore;
         private readonly IClock _clock;
@@ -100,7 +100,7 @@ namespace OOTO.Core.EventSourcing
 
         private void SetAllFactDetails(IEnumerable<IFact> allFactsForThisUnitOfWork)
         {
-            var userId = _identity.Id();
+            var userId = _identity.IsAuthenticated ? _identity.Name : "[UNKNOWN]";
             var timestamp = _clock.UtcNow;
             var sequenceNumber = 0;
 

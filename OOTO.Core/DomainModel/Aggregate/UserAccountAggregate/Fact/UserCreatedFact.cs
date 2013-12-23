@@ -8,17 +8,12 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // */
 
-using System;
-using System.Security.Principal;
+using OOTO.Core.EventSourcing.Domain;
 
-namespace OOTO.Core.Extensions
+namespace OOTO.Core.DomainModel.Aggregate.UserAccountAggregate.Fact
 {
-    //Originally from https://github.com/andrewabest/EventSourcing101
-    public static class IdentityExtensions
+    public class UserCreatedFact : Fact<UserAccount>
     {
-        public static Guid? Id(this IIdentity identity)
-        {
-            return !string.IsNullOrEmpty(identity.Name) ? new Guid(identity.Name) : (Guid?) null;
-        }
+        public string Name { get; set; }
     }
 }
